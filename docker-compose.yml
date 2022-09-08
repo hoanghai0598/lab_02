@@ -1,0 +1,30 @@
+version: '3.8'
+services:
+    php-apache-environment:
+        container_name: php-apache
+        restart: always
+        build: 
+            context: .
+            dockerfile: Dockerfile
+        depends_on:
+            - db
+        volumes:
+            - /opt/flag02:/opt/flag02:ro
+            - ./html1:/var/www/html
+        ports:
+            - 8000:80
+    db:
+        container_name: db
+        image: mysql
+        restart: always
+        volumes:
+            - ./html1/mobileshop.sql:/docker-entrypoint-initdb.d/mobileshop.sql
+        environment:
+            MYSQL_ROOT_PASSWORD: r00t@p@55w0rd
+            MYSQL_DATABASE: mobileshop
+            MYSQL_USER: supper_secret
+            MYSQL_PASSWORD: s333cccr3t@2021@@@
+        ports:
+            - "9906:3306"
+
+            
